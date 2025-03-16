@@ -3,22 +3,22 @@ const router = express.Router()
 
 const postsController = require("../controllers/posts_controller")
 
-/* index */
+//index
 router.get("/", postsController.index)
 
-/* show */
+//show
 router.get("/:id", postsController.show)
 
-/* create */
+//create
 router.post("/", postsController.create)
 
-/* update */
+//update
 router.put("/:id", postsController.update)
 
-/* modify */
+//modify
 router.patch("/:id", postsController.modify)
 
-/* delete */
+//delete
 router.delete("/:id", postsController.destroy)
 
 module.exports = router

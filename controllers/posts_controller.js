@@ -1,11 +1,22 @@
 const postsData = require("../data/posts_data")
 
-/* index */
+//index
 function index(req, res) {
-    res.json(postsData);
-}
+    const tag = req.query.tag;
 
-/* show */
+    if (tag) {
+        const filteredPosts = postsData.filter(post => post.tags.includes(tag));
+        res.json(filteredPosts);
+    } else {
+        res.json(postsData);
+    }
+}
+//examples:
+// http://localhost:3000/posts?tag=Dolci 
+// http://localhost:3000/posts?tag=Ricette%20al%20forno 
+// http://localhost:3000/posts?tag=Ricette%20vegetariane
+
+// show
 function show(req, res) {
     const id = parseInt(req.params.id)
     const thisPost = postsData.find(thisPost => thisPost.id === id);
@@ -17,25 +28,22 @@ function show(req, res) {
     }
 }
 
-/* res.send(`Showing post n°` + req.params.id + postsData[req.params.id - 1]) */
-/* res.send('Dettagli della pizza ' + req.params.id); */
-
-/* create */
+//create
 function create(req, res) {
     res.send("Create a post")
 }
 
-/* update */
+//update
 function update(req, res) {
     res.send(`Update post n°${req.params.id}`)
 }
 
-/* modify */
+//modify
 function modify(req, res) {
     res.send(`Modify post n°${req.params.id}`)
 }
 
-/* delete */
+//delete
 function destroy(req, res) {
     const id = parseInt(req.params.id);
     const thisPostIndex = postsData.findIndex(post => post.id === id);
@@ -47,7 +55,10 @@ function destroy(req, res) {
 
         console.log("Updated posts list:", postsData);
 
+        //to display a blank page
         res.status(204).send();
+        //alternatively, to display a success message: 
+        /* res.status(200).send(`The post n°${id} was successfully deleted!`); */
     }
 }
 

@@ -30,12 +30,59 @@ function show(req, res) {
 
 //create
 function create(req, res) {
-    res.send("Create a post")
+    // Creiamo un nuovo id incrementando l'ultimo id presente
+    const newId = postsData[postsData.length - 1].id + 1;
+
+    // Creiamo un nuovo oggetto thisPost
+    const newthisPost = {
+        id: newId,
+        title: req.body.title,
+        slug: req.body.title.toLowerCase().replaceAll(" ", "-"),
+        content: req.body.content,
+        image: req.body.image,
+        tags: req.body.tags
+    }
+
+    // Aggiungiamo la nuova thisPost al postsData
+    postsData.push(newthisPost);
+
+    // controlliamo
+    console.log(postsData);
+
+    // Restituiamo lo status corretto e la thisPost appena creata
+    res.status(201);
+    res.json(newthisPost);
 }
 
 //update
 function update(req, res) {
-    res.send(`Update post n°${req.params.id}`)
+    // recuperiamo l'id dall' URL e trasformiamolo in numero
+    const id = parseInt(req.params.id)
+
+    // cerchiamo il thisPost tramite id
+    const thisPost = postsData.find(thisPost => thisPost.id === id);
+
+    // Piccolo controllo
+    if (!thisPost) {
+        res.status(404);
+        return res.json({
+            error: "Error 404: Post not found",
+            message: `We currently have ${postsData.length} posts, try again with a valid number`
+        })
+    }
+
+    // Aggiorniamo la thisPost
+    thisPost.title = req.body.title;
+    thisPost.slug = req.body.title.toLowerCase().replaceAll(" ", "-");
+    thisPost.content = req.body.content;
+    thisPost.image = req.body.image;
+    thisPost.tags = req.body.tags;
+
+    // Controlliamo il postsData
+    console.log(postsData)
+
+    // Restituiamo la thisPost appena aggiornata
+    res.json(thisPost);
 }
 
 //modify

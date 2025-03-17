@@ -6,6 +6,14 @@ const port = 3000
 
 app.use(express.static('public'));
 
+app.use(express.json());
+
+app.post("/", (req, res) => {
+    // dentro req.body troveremo i dati ricevuti in formato json
+    console.log(req.body);
+})
+
+
 app.listen(port, () => {
     console.log(`Blog running on port:`, port)
 })

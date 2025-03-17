@@ -18,11 +18,11 @@ function index(req, res) {
 
 // show
 function show(req, res) {
-    const id = parseInt(req.params.id)
-    const thisPost = postsData.find(thisPost => thisPost.id === id);
+    const slug = req.params.slug;
+    const thisPost = postsData.find(thisPost => thisPost.slug === slug);
 
     if (!thisPost) {
-        res.status(404).send(`Error 404: Post not found, we currently have ${postsData.length} posts, try again with a valid number`);
+        res.status(404).send(`Error 404: Post not found, we currently have ${postsData.length} posts, try again with a valid name`);
     } else {
         res.json(thisPost);
     }
@@ -32,12 +32,13 @@ function show(req, res) {
 function create(req, res) {
     // Creiamo un nuovo id incrementando l'ultimo id presente
     const newId = postsData[postsData.length - 1].id + 1;
+    const newSlug = req.body.title.toLowerCase().replaceAll(" ", "-");
 
     // Creiamo un nuovo oggetto thisPost
     const newthisPost = {
         id: newId,
         title: req.body.title,
-        slug: req.body.title.toLowerCase().replaceAll(" ", "-"),
+        slug: newSlug,
         content: req.body.content,
         image: req.body.image,
         tags: req.body.tags
@@ -57,10 +58,10 @@ function create(req, res) {
 //update
 function update(req, res) {
     // recuperiamo l'id dall' URL e trasformiamolo in numero
-    const id = parseInt(req.params.id)
+    const slug = req.params.slug;
 
-    // cerchiamo il thisPost tramite id
-    const thisPost = postsData.find(thisPost => thisPost.id === id);
+    // cerchiamo il thisPost tramite slug
+    const thisPost = postsData.find(thisPost => thisPost.slug === slug);
 
     // Piccolo controllo
     if (!thisPost) {
@@ -92,8 +93,8 @@ function modify(req, res) {
 
 //delete
 function destroy(req, res) {
-    const id = parseInt(req.params.id);
-    const thisPostIndex = postsData.findIndex(post => post.id === id);
+    const slug = parseInt(req.params.slug);
+    const thisPostIndex = postsData.findIndex(post => post.slug === slug);
 
     if (thisPostIndex === -1) {
         return res.status(404).send(`Error 404: Post not found, we currently have ${postsData.length} posts, please try again with a valid number`);

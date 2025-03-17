@@ -68,7 +68,7 @@ function update(req, res) {
         res.status(404);
         return res.json({
             error: "Error 404: Post not found",
-            message: `We currently have ${postsData.length} posts, try again with a valid number`
+            message: `We currently have ${postsData.length} posts, try again with a valid name`
         })
     }
 
@@ -97,7 +97,7 @@ function destroy(req, res) {
     const thisPostIndex = postsData.findIndex(post => post.slug === slug);
 
     if (thisPostIndex === -1) {
-        return res.status(404).send(`Error 404: Post not found, we currently have ${postsData.length} posts, please try again with a valid number`);
+        return res.status(404).send(`Error 404: Post not found, we currently have ${postsData.length} posts, please try again with a valid name`);
     } else {
         postsData.splice(thisPostIndex, 1);
 

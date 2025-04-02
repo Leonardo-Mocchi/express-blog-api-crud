@@ -2,9 +2,15 @@ const express = require("express")
 const app = express()
 const port = 3000
 
+const cors = require("cors");
+
 const postsRouters = require("./routers/posts")
 const serverErrorsHandler = require("./middlewares/server_error_handler");
 const notFoundHandler = require("./middlewares/not_found");
+
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
 
 app.use(express.static('public'));
 
@@ -17,7 +23,7 @@ app.post("/", (req, res) => {
 
 
 app.listen(port, () => {
-    console.log(`Blog running on port:`, port)
+    console.log(`Blog running on port:`, port, "at http://localhost:3000/")
 })
 
 app.get('/', (req, res) => {

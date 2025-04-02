@@ -23,7 +23,8 @@ app.post("/", (req, res) => {
 
 
 app.listen(port, () => {
-    console.log(`Blog running on port:`, port, "at http://localhost:3000/")
+    console.log(`Blog running on port: ${port}
+@ http://localhost:3000/`)
 })
 
 app.get('/', (req, res) => {

@@ -93,7 +93,7 @@ function modify(req, res) {
 
 //delete
 function destroy(req, res) {
-    const slug = parseInt(req.params.slug);
+    const slug = req.params.slug;
     const thisPostIndex = postsData.findIndex(post => post.slug === slug);
 
     if (thisPostIndex === -1) {
